@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Admin Dashboard</h2>
+
+<div style="max-width: 600px; width: 100%;">
+
+    <h3>Membership Overview</h3>
+
+    <p><strong>Total Members:</strong> {{ total_members }}</p>
+    <p><strong>Pending Applications:</strong> {{ pending }}</p>
+    <p><strong>Active Members:</strong> {{ active }}</p>
+    <p><strong>Inactive Members:</strong> {{ inactive }}</p>
+
+    <h3>Management</h3>
+    <ul>
+        <li><a href="/admin/members">Manage Members</a></li>
+        <li><a href="/admin/users">Manage User Accounts</a></li>
+    </ul>
+
+</div>
+{% endblock %}

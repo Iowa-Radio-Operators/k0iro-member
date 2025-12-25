@@ -1,0 +1,48 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.env/
+.venv/
+
+# pyenv local version file
+.python-version
+
+# SQLite database
+*.db
+
+# Flask instance folder (if used)
+instance/
+*.sqlite3
+
+# Environment variables / secrets
+.env
+*.env
+
+# VS Code settings
+.vscode/
+
+# macOS junk
+.DS_Store
+
+# Logs
+*.log
+
+# Byte-compiled / optimized / DLL files
+*.so
+
+# Coverage / testing
+htmlcov/
+.coverage
+.coverage.*
+.cache
+pytest_cache/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/

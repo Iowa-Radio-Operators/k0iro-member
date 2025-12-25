@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Member Management</h2>
+
+<div class="table-container">
+<table>
+    <tr>
+        <th>Call Sign</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Status</th>
+        <th>Dues Paid Until</th>
+        <th style="white-space: nowrap;">Actions</th>
+    </tr>
+
+    {% for m in members %}
+
+    <tr>
+        <td>{{ m.callsign }}</td>
+
+        <td>{{ m.first_name }} {{ m.last_name }}</td>
+
+        <td>{{ m.email }}</td>
+
+        <td>{{ m.phone }}</td>
+
+        <td>
+            {{ m.address }}<br>
+            {{ m.city }}, {{ m.state }} {{ m.zip }}
+        </td>
+
+        <td>{{ m.status }}</td>
+
+        <td
+            {% if m.dues_date == None %}
+                style="background:#ccc;"
+            {% elif m.dues_date < today %}
+                style="background:#ffcccc;"
+            {% else %}
+                style="background:#ccffcc;"
+            {% endif %}
+        >
+            <form method="POST" action="/admin/members/{{ m.id }}/set_dues" style="display:flex; gap:5px;">
+                <input type="date"
+                       name="dues_paid_until"
+                       value="{{ m.dues_paid_until or '' }}"
+                       style="width:150px;">
+                <button type="submit">Save</button>
+            </form>
+        </td>
+
+        <td style="white-space: nowrap;">
+            {% if m.status == 'Pending' %}
+                <a href="/admin/members/{{ m.id }}/approve">Approve</a>
+            {% endif %}
+
+            {% if m.status != 'Inactive' %}
+                <a href="/admin/members/{{ m.id }}/deactivate" style="margin-left:10px;">Deactivate</a>
+            {% endif %}
+
+            <a href="/admin/members/{{ m.id }}/renew" style="margin-left:10px;">Renew +1 Year</a>
+
+            <a href="/admin/members/{{ m.id }}/edit" style="margin-left:10px;">Edit</a>
+        </td>
+    </tr>
+
+    {% endfor %}
+</table>
+</div>
+
+{% endblock %}

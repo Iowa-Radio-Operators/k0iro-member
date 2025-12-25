@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>My Account</h2>
+
+<div style="max-width: 600px; width: 100%;">
+
+    <h3>Member Information</h3>
+    <p><strong>First Name:</strong> {{ member.first_name }}</p>
+    <p><strong>Last Name:</strong> {{ member.last_name }}</p>
+
+    <p><strong>Address:</strong><br>
+        {{ member.address }}<br>
+        {{ member.city }}, {{ member.state }} {{ member.zip }}
+    </p>
+
+    <p><strong>Phone:</strong> {{ member.phone }}</p>
+    <p><strong>Email:</strong> {{ member.email }}</p>
+
+    <h3>Account Details</h3>
+    <p><strong>Call Sign:</strong> {{ user.callsign }}</p>
+    <p><strong>Status:</strong> {{ member.status }}</p>
+    <p><strong>Dues Paid Until:</strong> {{ member.dues_paid_until if member.dues_paid_until else "Not Set" }}</p>
+
+    <p style="margin-top: 1.5rem; font-size: 0.9rem; color: #555;">
+        If any of this information is incorrect, please email 
+        <a href="mailto:info@k0iro.com">info@k0iro.com</a> for assistance.
+    </p>
+
+</div>
+
+{% endblock %}

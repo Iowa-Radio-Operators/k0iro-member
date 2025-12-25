@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Edit Member: {{ member.callsign }}</h2>
+
+<style>
+    .edit-form {
+        max-width: 600px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .edit-form label {
+        font-weight: bold;
+        margin-bottom: 4px;
+        display: block;
+    }
+
+    .edit-form input,
+    .edit-form select {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+        box-sizing: border-box;
+    }
+
+    .edit-form button {
+        padding: 10px 16px;
+        font-size: 1rem;
+        margin-top: 10px;
+        width: fit-content;
+    }
+
+    .checkbox-label {
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+</style>
+
+<form method="POST" class="edit-form">
+
+    <div>
+        <label>Call Sign</label>
+        <input type="text" name="callsign" value="{{ member.callsign }}" required>
+    </div>
+
+    <div>
+        <label>First Name</label>
+        <input type="text" name="first_name" value="{{ member.first_name }}" required>
+    </div>
+
+    <div>
+        <label>Last Name</label>
+        <input type="text" name="last_name" value="{{ member.last_name }}" required>
+    </div>
+
+    <div>
+        <label>Address</label>
+        <input type="text" name="address" value="{{ member.address }}" required>
+    </div>
+
+    <div>
+        <label>City</label>
+        <input type="text" name="city" value="{{ member.city }}" required>
+    </div>
+
+    <div>
+        <label>State</label>
+        <select name="state" required>
+            <option value="">Select State</option>
+            {% for abbr, name in [
+                ('AL','Alabama'), ('AK','Alaska'), ('AZ','Arizona'), ('AR','Arkansas'),
+                ('CA','California'), ('CO','Colorado'), ('CT','Connecticut'), ('DE','Delaware'),
+                ('FL','Florida'), ('GA','Georgia'), ('HI','Hawaii'), ('ID','Idaho'),
+                ('IL','Illinois'), ('IN','Indiana'), ('IA','Iowa'), ('KS','Kansas'),
+                ('KY','Kentucky'), ('LA','Louisiana'), ('ME','Maine'), ('MD','Maryland'),
+                ('MA','Massachusetts'), ('MI','Michigan'), ('MN','Minnesota'), ('MS','Mississippi'),
+                ('MO','Missouri'), ('MT','Montana'), ('NE','Nebraska'), ('NV','Nevada'),
+                ('NH','New Hampshire'), ('NJ','New Jersey'), ('NM','New Mexico'), ('NY','New York'),
+                ('NC','North Carolina'), ('ND','North Dakota'), ('OH','Ohio'), ('OK','Oklahoma'),
+                ('OR','Oregon'), ('PA','Pennsylvania'), ('RI','Rhode Island'), ('SC','South Carolina'),
+                ('SD','South Dakota'), ('TN','Tennessee'), ('TX','Texas'), ('UT','Utah'),
+                ('VT','Vermont'), ('VA','Virginia'), ('WA','Washington'), ('WV','West Virginia'),
+                ('WI','Wisconsin'), ('WY','Wyoming')
+            ] %}
+                <option value="{{ abbr }}"
+                    {% if member.state == abbr %}selected{% endif %}>
+                    {{ name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div>
+        <label>ZIP</label>
+        <input type="text" name="zip" value="{{ member.zip }}" required>
+    </div>
+
+    <div>
+        <label>Email</label>
+        <input type="email" name="email" value="{{ member.email }}" required>
+    </div>
+
+    <div>
+        <label>Phone</label>
+        <input type="text" name="phone" value="{{ member.phone }}" required>
+    </div>
+
+    <div>
+        <label>Status</label>
+        <select name="status">
+            <option value="Pending"  {% if member.status == 'Pending' %}selected{% endif %}>Pending</option>
+            <option value="Active"   {% if member.status == 'Active' %}selected{% endif %}>Active</option>
+            <option value="Inactive" {% if member.status == 'Inactive' %}selected{% endif %}>Inactive</option>
+        </select>
+    </div>
+
+    {% if session.user_is_admin %}
+    <div>
+        <label class="checkbox-label">
+            <input type="checkbox" name="is_admin" value="1"
+                   {% if member.is_admin == 1 %}checked{% endif %}>
+            Administrator
+        </label>
+    </div>
+    {% endif %}
+
+    <button type="submit">Save Changes</button>
+</form>
+
+{% endblock %}
