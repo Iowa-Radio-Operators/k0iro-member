@@ -1,9 +1,13 @@
 from flask import Flask
+from dotenv import load_dotenv
+import os
 from .database import init_db
 
 def create_app():
+    load_dotenv()  # Load .env file
+
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'dev-key'
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-key')
 
     init_db()
 
