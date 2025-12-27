@@ -20,6 +20,12 @@ def apply():
         callsign = request.form.get('callsign', '').strip().upper()
         password = request.form.get('password', '')
 
+        # NEW: Agreement checkbox
+        agreed = request.form.get('agreed_to_terms')
+        if not agreed:
+            error = "You must agree to the club bylaws and constitution to apply."
+            return render_template('apply.html', title="Apply", error=error)
+
         # Basic validation
         if not all([first, last, address, city, state, zip_code, email, phone, callsign, password]):
             error = "All fields are required."
@@ -36,15 +42,15 @@ def apply():
             error = "That call sign is already registered."
             return render_template('apply.html', title="Apply", error=error)
 
-        # Insert into members table (correct schema)
+        # Insert into members table
         cursor.execute("""
             INSERT INTO members (
                 first_name, last_name, address, city, state, zip,
-                phone, email, status, dues_paid_until, callsign
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Pending', NULL, ?)
+                phone, email, status, dues_paid_until, callsign, agreed_to_terms
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Pending', NULL, ?, ?)
         """, (
             first, last, address, city, state, zip_code,
-            phone, email, callsign
+            phone, email, callsign, 1  # agreed_to_terms = 1
         ))
 
         # Insert into users table

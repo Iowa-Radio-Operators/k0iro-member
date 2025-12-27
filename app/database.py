@@ -32,11 +32,12 @@ def init_db():
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            callsign TEXT NOT NULL UNIQUE,
+            callsign TEXT UNIQUE NOT NULL,
             email TEXT NOT NULL,
             password_hash TEXT NOT NULL,
-            is_admin INTEGER NOT NULL DEFAULT 0,
-            is_active INTEGER NOT NULL DEFAULT 1
+            is_admin INTEGER DEFAULT 0,
+            is_active INTEGER DEFAULT 1,
+            accepted_terms INTEGER DEFAULT 0
         );
     """)
 

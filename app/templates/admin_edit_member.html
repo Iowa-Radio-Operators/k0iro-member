@@ -119,6 +119,15 @@
         </select>
     </div>
 
+    <!-- NEW FIELD: Agreed to Terms -->
+    <div>
+        <label class="checkbox-label">
+            <input type="checkbox" name="agreed_to_terms"
+                   {% if member.agreed_to_terms == 1 %}checked{% endif %}>
+            Agreed to Terms
+        </label>
+    </div>
+
     {% if session.user_is_admin %}
     <div>
         <label class="checkbox-label">

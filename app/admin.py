@@ -222,14 +222,17 @@ def edit_member(member_id):
         # Checkbox: checked → "1", unchecked → None
         is_admin = 1 if request.form.get("is_admin") == "1" else 0
 
+        # >>> NEW FIELD: agreed_to_terms <<<
+        agreed_to_terms = 1 if request.form.get("agreed_to_terms") else 0
+
         # Update members table
         cursor.execute("""
             UPDATE members
             SET first_name=?, last_name=?, address=?, city=?, state=?, zip=?,
-                email=?, phone=?, callsign=?, status=?
+                email=?, phone=?, callsign=?, status=?, agreed_to_terms=?
             WHERE id=?
         """, (first, last, address, city, state, zip_code,
-              email, phone, new_callsign, status, member_id))
+              email, phone, new_callsign, status, agreed_to_terms, member_id))
 
         # Update users table (admin role + callsign sync)
         cursor.execute("""
