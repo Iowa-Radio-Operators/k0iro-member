@@ -9,6 +9,8 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-key')
 
+    app.config['PERMANENT_SESSION_LIFETIME'] = 14400  # 4 hours
+
     init_db()
 
     from .routes import main

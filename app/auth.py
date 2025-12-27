@@ -52,6 +52,7 @@ def register():
         session['user'] = callsign
         session['user_id'] = new_user_id
         session['user_is_admin'] = False
+        session.permanent = True
 
         return redirect(url_for('main.index'))
 
@@ -94,7 +95,8 @@ def login():
         session['user'] = user['callsign']
         session['user_id'] = user['id']
         session['user_is_admin'] = bool(user['is_admin'])
-
+        session.permanent = True
+        
         return redirect(url_for('main.index'))
 
     return render_template('login.html', title="Login", error=error)
